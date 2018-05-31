@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<VBox fx:id="vbox" layoutX="10.0" layoutY="10.0" prefHeight="350.0" prefWidth="400.0" spacing="10" fx:controller="productos.ProductosController" xmlns:fx="http://javafx.com/fxml/1">
+    <style>
+        -fx-padding: 10;
+        -fx-border-style: solid inside;
+        -fx-border-width: 2;
+        -fx-border-insets: 5;
+        -fx-border-radius: 5;
+        -fx-border-color: #D4AF37;
+        -fx-background-color: #000000;
+    </style>
+    
+    <children>
+        <HBox spacing="10" alignment="CENTER">
+                <Label fx:id="titulo" text="PRODUCTOS" /> 
+                <style> -fx-background-color: #D4AF37; </style>
+        </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="60" alignment="BASELINE_CENTER" >
+            <Button onAction="#handleBotonesProducto" text="CREAR" fx:id="btn_crear" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            <Button onAction="#handleBotonesProducto" text="CONSULTAS" fx:id="btn_leer" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            <Button onAction="#handleBotonesProducto" text="ACTUALIZAR" fx:id="btn_actualizar" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            <Button onAction="#handleBotonesProducto" text="ELIMINAR" fx:id="btn_eliminar" alignment="BASELINE_CENTER">
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            
+            <style>
+                -fx-padding: 10;
+                -fx-border-style: solid inside;
+                -fx-border-width: 2;
+                -fx-border-insets: 5;
+                -fx-border-radius: 5;
+                -fx-border-color: #D4AF37;
+                -fx-background-color: #000000;
+            </style>
+            <padding><Insets top="10" right="50" bottom="10" left="50"/></padding>
+        </HBox>
+    </children>
+    
+    <children>
+            <HBox spacing="30" alignment="CENTER">
+            <GridPane hgap="10" vgap="10"  prefWidth="500" prefHeight="300">
+                
+                <Label text="DEPARTAMENTO" prefWidth="150"  fx:id="lbl1" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <ComboBox fx:id="departamento" prefWidth="230"  GridPane.columnIndex="1" GridPane.rowIndex="1" >
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                        
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+
+                <Label text="DESCRIPCIÓN" fx:id="lbl2"  GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="descripcion" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="CÓDIGO" fx:id="lbl3"  GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <TextField fx:id="codigo" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                
+                <Label text="MARCA" fx:id="lbl4"  GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <TextField fx:id="marca" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                
+                <Label text="MODELO" fx:id="lbl5"  GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <TextField fx:id="modelo" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                
+                <Label text="TALLA" fx:id="lbl6" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <ComboBox fx:id="talla" prefWidth="230" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                        
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+
+                
+                <Label text="PRECIO DE COMPRA" fx:id="lbl7" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                <TextField fx:id="precio_compra" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+                <Label text="PRECIO DE VENTA" fx:id="lbl8" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+                <TextField fx:id="precio_venta" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
+                <Label text="CANTIDAD EN EXISTENCIA" fx:id="lbl9" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+                <TextField fx:id="cantidad" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+
+                <Label text="PROVEEDOR" fx:id="lbl10" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+                <ComboBox fx:id="proveedor" prefWidth="230" GridPane.columnIndex="1" GridPane.rowIndex="10" >
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                        
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+
+                <Label text="PAÍS DE ORIGEN" fx:id="lbl11" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
+                <ComboBox fx:id="pais_origen" prefWidth="230" GridPane.columnIndex="1" GridPane.rowIndex="11" >
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                        
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <Button onAction="#handleBotonesProducto" fx:id="btn_seleccionar" alignment="BASELINE_CENTER"  text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="12"><style> -fx-background-color: transparent; </style></Button>
+                <Button onAction="#handleBotonesProducto" fx:id="btn_cancelar" alignment="BASELINE_CENTER"  text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="12"><style> -fx-background-color: transparent; </style></Button>
+            </GridPane>
+            
+            <ListView fx:id="lista_" prefWidth="400"  />
+            
+        </HBox>
+            <HBox spacing="10" alignment="BASELINE_CENTER"  AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10">
+                <Button onAction="#handleBotonesProducto" text="CREAR" fx:id="btn_aceptar_crear" alignment="BASELINE_CENTER"><style> -fx-background-color: transparent; </style></Button>
+                <Button onAction="#handleBotonesProducto" text="ACTUALIZAR" fx:id="btn_aceptar_actualizar" alignment="BASELINE_CENTER"><style> -fx-background-color: transparent; </style></Button>
+                <Button onAction="#handleBotonesProducto" text="ELIMINAR" fx:id="btn_aceptar_eliminar" alignment="BASELINE_CENTER"><style> -fx-background-color: transparent; </style></Button>
+            </HBox>
+    </children>
+</VBox>

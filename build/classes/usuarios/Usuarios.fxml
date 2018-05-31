@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?language JavaScript?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<VBox fx:id="vbox" layoutX="10.0" layoutY="10.0" prefHeight="250.0" prefWidth="300.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="usuarios.UsuariosController">
+    <style>
+        -fx-padding: 10;
+        -fx-border-style: solid inside;
+        -fx-border-width: 2;
+        -fx-border-insets: 5;
+        -fx-border-radius: 5;
+        -fx-border-color: #D4AF37;
+        -fx-background-color: #000000;
+    </style>
+    
+    <children>
+        <HBox spacing="10" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: #D4AF37; </style><Label text="USUARIOS"></Label> 
+        </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="60" alignment="BASELINE_CENTER" >
+            <Button onAction="#handleBotones" text="CREAR" fx:id="btn_crear" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            <Button onAction="#handleBotones" text="CONSULTAS" fx:id="btn_leer" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            <Button onAction="#handleBotones" text="ACTUALIZAR" fx:id="btn_actualizar" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            <Button onAction="#handleBotones" text="ELIMINAR" fx:id="btn_eliminar" alignment="BASELINE_CENTER">
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            
+            <style>
+                -fx-padding: 10;
+                -fx-border-style: solid inside;
+                -fx-border-width: 2;
+                -fx-border-insets: 5;
+                -fx-border-radius: 5;
+                -fx-border-color: #D4AF37;
+                -fx-background-color: #000000;
+            </style>
+            <padding><Insets top="10" right="50" bottom="10" left="50"/></padding>
+        </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="10" alignment="CENTER" >
+            <GridPane hgap="10" vgap="10"  >
+                <Label fx:id="lbl2" text="Usuario: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <ComboBox fx:id="usuario" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                        
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                
+                <Label fx:id="lbl1" text="Contraseña: " GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <PasswordField fx:id="contraseña" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                
+                <Button onAction="#handleBotones" fx:id="btn_seleccionar" alignment="BASELINE_CENTER"  text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="4"><style> -fx-background-color: transparent; </style></Button>
+                <Button onAction="#handleBotones" fx:id="btn_cancelar" alignment="BASELINE_CENTER"  text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="4"><style> -fx-background-color: transparent; </style></Button>
+
+                </GridPane>
+            
+            <ListView fx:id="lista_usuarios" prefWidth="400" prefHeight="400" >
+                
+            </ListView>
+            </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="10" alignment="BASELINE_CENTER"  AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" >
+            <Button onAction="#handleBotones" text="CREAR" fx:id="btn_aceptar_crear" alignment="BASELINE_CENTER"><style> -fx-background-color: transparent; </style></Button>
+            <Button onAction="#handleBotones" text="ACTUALIZAR" fx:id="btn_aceptar_actualizar" alignment="BASELINE_CENTER"><style> -fx-background-color: transparent; </style></Button>
+            <Button onAction="#handleBotones" text="ELIMINAR" fx:id="btn_aceptar_eliminar" alignment="BASELINE_CENTER"><style> -fx-background-color: transparent; </style></Button>
+        </HBox>
+    </children>   
+</VBox>

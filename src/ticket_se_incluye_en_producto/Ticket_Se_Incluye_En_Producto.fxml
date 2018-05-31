@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?language JavaScript?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vbox" layoutX="10.0" layoutY="10.0" prefHeight="250.0" prefWidth="300.0" spacing="10" fx:controller="ticket_se_incluye_en_producto.Ticket_Se_Incluye_En_ProductoController">
+    <style>
+        -fx-padding: 10;
+        -fx-border-style: solid inside;
+        -fx-border-width: 2;
+        -fx-border-insets: 5;
+        -fx-border-radius: 5;
+        -fx-border-color: #D4AF37;
+        -fx-background-color: #000000;
+    </style>
+    
+    <children>
+        <HBox spacing="20" alignment="BASELINE_CENTER" >
+            <style> 
+                -fx-background-color: #D4AF37;
+                -fx-border-radius: 40; 
+            </style>
+            <Label text="TICKET SE INCLUYE EN PRODUCTO"></Label> 
+        </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="100" alignment="BASELINE_CENTER" >
+            <Label fx:id="lbl1"  text="CANTIDAD DE PRODUCTOS"></Label> 
+            <Label fx:id="lbl2"  text="NUMERO DE TICKET"></Label>
+            <Label fx:id="lbl3"  text="CODIGO DE PRODUCTO"></Label>
+        </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="10" alignment="CENTER" >
+            <ListView fx:id="lista_" prefWidth="800" prefHeight="550" >
+                
+            </ListView>
+            </HBox>
+    </children>
+     
+</VBox>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?language JavaScript?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<VBox fx:id="vbox" layoutX="10.0" layoutY="10.0" prefHeight="250.0" prefWidth="300.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordenes.OrdenesController">
+    <style>
+        -fx-padding: 10;
+        -fx-border-style: solid inside;
+        -fx-border-width: 2;
+        -fx-border-insets: 5;
+        -fx-border-radius: 5;
+        -fx-border-color: #D4AF37;
+        -fx-background-color: #000000;
+    </style>
+    
+    <children>
+        <HBox spacing="10" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: #D4AF37; </style><Label text="ORDEN"></Label> 
+        </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="60" alignment="BASELINE_CENTER" >
+            <Button onAction="#handleBotonesPaises" text="CREAR" fx:id="btn_crear" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            <Button onAction="#handleBotonesPaises" text="CONSULTAS" fx:id="btn_leer" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            <Button onAction="#handleBotonesPaises" text="ACTUALIZAR" fx:id="btn_actualizar" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            <Button onAction="#handleBotonesPaises" text="ELIMINAR" fx:id="btn_eliminar" alignment="BASELINE_CENTER">
+            <style> -fx-background-color: transparent; </style>
+            </Button>
+            
+            <style>
+                -fx-padding: 10;
+                -fx-border-style: solid inside;
+                -fx-border-width: 2;
+                -fx-border-insets: 5;
+                -fx-border-radius: 5;
+                -fx-border-color: #D4AF37;
+                -fx-background-color: #000000;
+            </style>
+            <padding><Insets top="10" right="50" bottom="10" left="50"/></padding>
+        </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="30" alignment="CENTER" >
+            <GridPane hgap="10" vgap="10"  >
+                <Label fx:id="lbl1" text="Fecha de orden: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <DatePicker fx:id="fecha_orden" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label fx:id="lbl2" text="Fecha de Entrega: " GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <DatePicker fx:id="fecha_entrega" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                
+                <Label fx:id="lbl3" text="Subtotal: " GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <TextField fx:id="subtotal" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                
+                <Label fx:id="lbl4" text="IVA: " GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <TextField fx:id="iva" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                
+                <Label fx:id="lbl5" text="Total: " GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <TextField fx:id="total" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                
+                <Label fx:id="lbl6" text="Proveedor: " GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                <ComboBox fx:id="cmb_cve_proveedor" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                        
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                
+                <Button onAction="#handleBotonesPaises" fx:id="btn_calcular" alignment="BASELINE_CENTER"  text="Calcular" GridPane.columnIndex="0" GridPane.rowIndex="8"><style> -fx-background-color: transparent; </style></Button>
+                
+                <Button onAction="#handleBotonesPaises" fx:id="btn_seleccionar" alignment="BASELINE_CENTER"  text="Seleccionar" GridPane.columnIndex="1" GridPane.rowIndex="8"><style> -fx-background-color: transparent; </style></Button>
+                <Button onAction="#handleBotonesPaises" fx:id="btn_cancelar" alignment="BASELINE_CENTER"  text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="8"><style> -fx-background-color: transparent; </style></Button>
+
+
+                </GridPane>
+            
+            <ListView fx:id="lista_" prefWidth="400" prefHeight="400" >
+                
+            </ListView>
+            </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="10" alignment="BASELINE_CENTER"  AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" >
+            <Button onAction="#handleBotonesPaises" text="CREAR" fx:id="btn_aceptar_crear" alignment="BASELINE_CENTER"><style> -fx-background-color: transparent; </style></Button>
+            <Button onAction="#handleBotonesPaises" text="ACTUALIZAR" fx:id="btn_aceptar_actualizar" alignment="BASELINE_CENTER"><style> -fx-background-color: transparent; </style></Button>
+            <Button onAction="#handleBotonesPaises" text="ELIMINAR" fx:id="btn_aceptar_eliminar" alignment="BASELINE_CENTER"><style> -fx-background-color: transparent; </style></Button>
+        </HBox>
+    </children>   
+</VBox>

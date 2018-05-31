@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?language JavaScript?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="vbox" layoutX="10.0" layoutY="10.0" prefHeight="250.0" prefWidth="300.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apartado_tiene_productos.Apartado_Tiene_ProductoController">
+    <style>
+        -fx-padding: 10;
+        -fx-border-style: solid inside;
+        -fx-border-width: 2;
+        -fx-border-insets: 5;
+        -fx-border-radius: 5;
+        -fx-border-color: #D4AF37;
+        -fx-background-color: #000000;
+    </style>
+    
+    <children>
+        <HBox spacing="10" alignment="BASELINE_CENTER" >
+            <style> -fx-background-color: #D4AF37; </style><Label text="APARTADO TIENE PRODUCTO"></Label> 
+        </HBox>
+    </children>
+    
+    <children>
+        <HBox spacing="10" alignment="CENTER" >
+            <ListView fx:id="lista_" prefWidth="400" prefHeight="400" >
+                
+            </ListView>
+            </HBox>
+    </children>
+     
+</VBox>
