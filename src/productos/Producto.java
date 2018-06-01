@@ -97,7 +97,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return cve_producto + "\t\t" + String.format("%-40s", descripcion) + "\t\t" + String.format("%30s", precio_venta);
+        return cve_producto + "\t\t" + String.format("%-40s", descripcion) + "\t" + String.format("%30s", precio_venta);
     }
     
     

@@ -279,91 +279,12 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
         title.centerShapeProperty().setValue(true);
         
         titulo.getChildren().add(title);
-        Hbox_ventas.getChildren().addAll(lado_izquierdo(),centro(),lado_derecho());
+        Hbox_ventas.getChildren().addAll(centro(),lado_derecho());
         Vbox_ventas.getChildren().addAll(titulo,Hbox_ventas);
         return Vbox_ventas;
     }
     
-    private VBox lado_izquierdo(){
-        VBox Vbox_lado_izquierdo = new VBox();
-        Vbox_lado_izquierdo.setPadding(new Insets(0, 12, 0, 12));
-        Vbox_lado_izquierdo.setSpacing(5);
-        Vbox_lado_izquierdo.setStyle("-fx-background-color: #000000;");
-        
-        //DEPARTAMENTOS
-        HBox departamentos = new HBox();
-        departamentos.setPadding(new Insets(10, 10, 10, 50));
-        departamentos.setSpacing(40);
-        departamentos.setStyle("-fx-background-color: #000000;");
-        
-        Button btn_ropa = new Button("ROPA", new ImageView(new Image("iconos/ropa.png")));
-        btn_ropa.setPrefSize(100, 100);
-        btn_ropa.setTextFill(Color.web("#D4AF37"));
-        btn_ropa.setContentDisplay(ContentDisplay.TOP);
-        btn_ropa.setOnAction(handleBotones);
-        btn_ropa.setStyle("-fx-background-color: transparent; -fx-background-radius: 40; -fx-border-color: #D4AF37; -fx-border-insets: 2; -fx-border-width: 2; -fx-border-radius: 40; -fx-border-style: groove; ");
-        
-        Button btn_accesorios = new Button("ACCESORIOS", new ImageView(new Image("iconos/accesorios.png")));
-        btn_accesorios.setPrefSize(100, 100);
-        btn_accesorios.setTextFill(Color.web("#D4AF37"));
-        btn_accesorios.setContentDisplay(ContentDisplay.TOP);
-        btn_accesorios.setOnAction(handleBotones);
-        btn_accesorios.setStyle("-fx-background-color: transparent; -fx-background-radius: 40; -fx-border-color: #D4AF37; -fx-border-insets: 2; -fx-border-width: 2; -fx-border-radius: 40; -fx-border-style: groove; ");
-        departamentos.getChildren().addAll(btn_ropa,btn_accesorios);
-        
-        departamento_seleccionado = new Label(" ");
-        departamento_seleccionado.setTextFill(Color.web("#D4AF37"));
-        departamento_seleccionado.setPrefSize(150, 20);
-        
-        
-        //BUSQUEDA
-        HBox busqueda = new HBox();
-        busqueda.setPadding(new Insets(15, 12, 15, 12));
-        busqueda.setSpacing(10);
-        busqueda.setStyle("-fx-background-color: #000000;");
-        
-        Label item = new Label("TOTAL: ");
-        item.setTextFill(Color.web("#D4AF37"));
-        item.setPrefSize(60, 20);
-        textfiel_total_ticket = new TextField();
-        textfiel_total_ticket.setPrefSize(100, 20);
-        textfiel_total_ticket.setEditable(false);
-        Button btn_buscar = new Button("", new ImageView(new Image("iconos/buscar.png",16,16,true,true,true)));
-        btn_buscar.setTextFill(Color.web("#D4AF37"));
-        btn_buscar.setStyle("-fx-background-color: transparent;");
-        btn_buscar.setOnAction(handleBotones);
-        btn_buscar.setVisible(false);
-        
-        busqueda.getChildren().addAll(item, textfiel_total_ticket, btn_buscar);
-        
-        //RESULTADOS
-        HBox resultados = new HBox();
-        resultados.setPadding(new Insets(5, 30, 5, 30));
-        resultados.setSpacing(5);
-        resultados.setStyle("-fx-background-color: #000000;");
-        
-        lista1 = new ListView();
-        lista1.setPrefSize(400, 400);
-        
-        HBox caja_btn = new HBox();
-        caja_btn.setPadding(new Insets(5, 5, 5, 150));
-        caja_btn.setSpacing(5);
-        caja_btn.setStyle("-fx-background-color: #000000;");
-        
-        
-        btn_selecionar_tallas = new Button("VER TALLAS");
-        btn_selecionar_tallas.setPrefSize(100, 20);
-        btn_selecionar_tallas.setTextFill(Color.web("#D4AF37"));
-        btn_selecionar_tallas.setOnAction(handleBotones);
-        btn_selecionar_tallas.setStyle("-fx-background-color: transparent;");
-        
-        resultados.getChildren().addAll(lista1);
-        caja_btn.getChildren().addAll(btn_selecionar_tallas);
-        
-        Vbox_lado_izquierdo.getChildren().addAll(departamentos,departamento_seleccionado,busqueda,resultados,caja_btn);
-        
-        return Vbox_lado_izquierdo;
-    }
+    //***************************************************************************
     
     private VBox centro(){
         VBox Vbox_centro = new VBox();
@@ -454,6 +375,12 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
 
         return Vbox_ticket;
     }
+    
+    //***************************************************************************
+    
+    
+    
+    
     
     //SECCION DE CODIGO PARA EL BOTON LATERAL 
     private VBox sistema_apartado(){
@@ -1067,8 +994,10 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
             Button x = (Button) event.getSource();
             switch (x.getText()) {
                 case "VENTAS":
-                    border.setCenter(ventas());
-                    border.setRight(null);
+                    try {
+                        Parent root = FXMLLoader.load(getClass().getResource("/ventas/Ventas.fxml"));
+                        border.setCenter(root);
+                    } catch (Exception e) {System.err.println(""+e);}
                     break;
                 case "FACTURAS":
                     border.setCenter(facturas());//SIRVE
@@ -1219,50 +1148,12 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
                     
 //-----------------------------------------------BOTONES EDITAR---------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------------------------------------------------------------
-                case "ROPA":
-                    try {
-                        departamento_seleccionado.setText("Ropa");
-                        lista1.getItems().clear();
-                        ResultSet rs2=con_consultar.consultarDepartamento_Especifico("Ropa");
-                        int _cve_departamento=-1;
-                        while (rs2.next()) {                    
-                            _cve_departamento = rs2.getInt("cve_depto");
-                        }
-                        lista1.setItems(con_consultar.getDepartamento_Especifico(_cve_departamento));
-                    } catch (Exception e) {
-                        System.err.println(""+e);
-                    }
-                    
-                    break;
-                case "ACCESORIOS":
-                    try {
-                        departamento_seleccionado.setText("Accesorios");
-                        lista1.getItems().clear();
-                        ResultSet rs2=con_consultar.consultarDepartamento_Especifico("Accesorios");
-                        int _cve_departamento=-1;
-                        while (rs2.next()) {                    
-                            _cve_departamento = rs2.getInt("cve_depto");
-                        }
-                        lista1.setItems(con_consultar.getDepartamento_Especifico(_cve_departamento));
-                    } catch (Exception e) {
-                    }
-                    break;
+//----------------------------------------------------------------------------------------------------------------------------------
                 case "AGREGAR":
                     {
                         try {
                             agregar();
                             btn_procesar.setVisible(true);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(Proyecto5BaseDeDatos.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    break;
-                case "VER TALLAS":
-                    {
-                        try {
-                            Sele();
-                            btn_agregar_articulo.setVisible(true);
                         } catch (SQLException ex) {
                             Logger.getLogger(Proyecto5BaseDeDatos.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -1303,24 +1194,7 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
         lista_tallas.setItems(con_consultar.getTallas_Por_Clave_Producto_List(codigo));
     }
     
-    private void Sele() throws SQLException{
-        try{
-            ResultSet rs = con_consultar.getUltimo_Ticket();
-            while(rs.next()){
-                _no_ticket = rs.getInt("no_ticket");
-            }
-            no_ticket_a_generar.setText(""+_no_ticket);
-            
-            List<Producto> sval = lista1.getSelectionModel().getSelectedItems();
-                for(int i=0;i<sval.size();i++){
-                    Producto seleccion = sval.get(i);
-                    int codigo = seleccion.getCve_producto();
-                    busqueda_Tallas(codigo);
-                }
-        }catch(Exception e){
-            System.out.println(""+e);
-        }
-    }
+    
     
     private void agregar() throws SQLException{
         try{

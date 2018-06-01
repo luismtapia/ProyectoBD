@@ -525,6 +525,17 @@ public class SQL_Consultar {
     
             
     ////LEER TODOS
+    public ResultSet consultarDESDEtabla(String tabla) {
+            String query = "SELECT * FROM "+tabla;
+            java.sql.ResultSet resultado=null;
+            try {
+                Statement st = Conexion.createStatement();
+                resultado = st.executeQuery(query);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return resultado;
+    }
     public ResultSet consultarArea() {
             String query = "SELECT * FROM AREA";
             java.sql.ResultSet resultado=null;
@@ -977,6 +988,7 @@ public class SQL_Consultar {
     //--------------------------------------------------
     
     public ResultSet consultarDepartamento_Especifico(String departamento) {
+            //String query = "select * from VistaProductosDepto"+departamento;
             String query = "SELECT cve_depto FROM PRODUCTOS WHERE cve_depto in(SELECT cve_depto FROM DEPARTAMENTO WHERE nombre_depto = '"+departamento+"')";
             java.sql.ResultSet resultado=null;
             try {
