@@ -340,4 +340,18 @@ public class SQL_Actualizar {
         return false;
     }
     
+    public boolean Actualizar1Campo(String tabla, String columna, String nuevo_dato, String bandera){
+        try{
+            //"update Tallas_esde_producto set existencia = '23' where numero = '0' AND cvep = 'sfdd' "
+            String query ="UPDATE "+tabla+" SET "+columna+" = "+nuevo_dato+" WHERE "+bandera;
+            PreparedStatement st =Conexion.prepareStatement(query);
+            st.execute();
+            return true;
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+    
 }

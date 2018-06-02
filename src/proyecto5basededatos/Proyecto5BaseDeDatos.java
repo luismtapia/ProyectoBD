@@ -79,9 +79,6 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
     
     public BorderPane border;
     
-    private MenuBar barraMenu;
-    private Menu menuAbout;
-    
     SQL conn=new SQL();
     
     private Label departamento_seleccionado;
@@ -129,7 +126,6 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
                 border.setTop(metodo.generaEncabezado(usuario[4]));
                 border.setLeft(generaMenuLateral_Nivel_3()); 
             }
-            
         }
         return border;
     }
@@ -252,135 +248,6 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
 
         return menu_izquierda;
     }
-    
-    //SECCION DE CODIGO PARA EL BOTON LATERAL VENTAS
-    private VBox ventas(){
-        VBox Vbox_ventas = new VBox();
-        Vbox_ventas.setPadding(new Insets(15, 12, 15, 40));
-        Vbox_ventas.setSpacing(5);
-        Vbox_ventas.setStyle( "-fx-padding: 10;\n" +
-                                "-fx-border-style: solid inside; -fx-border-width: 2; -fx-border-insets: 5;\n" +
-                                "-fx-border-radius: 10;\n" +
-                                "-fx-border-color: #D4AF37;");
-        
-        HBox Hbox_ventas = new HBox();
-        Hbox_ventas.setPadding(new Insets(15, 12, 15, 40));
-        Hbox_ventas.setSpacing(30);
-
-        HBox titulo = new HBox();
-        titulo.setPadding(new Insets(10, 12, 10, 520));
-        titulo.setSpacing(5);
-        titulo.setStyle("-fx-background-color: #D4AF37;\n" +
-                        "-fx-border-style: solid outside;\n" +
-                        "-fx-border-width: 4;\n" +
-                        "-fx-border-radius: 10;\n" +
-                        "-fx-border-color: #000000;");
-        Label title =new Label("VENTAS");
-        title.centerShapeProperty().setValue(true);
-        
-        titulo.getChildren().add(title);
-        Hbox_ventas.getChildren().addAll(centro(),lado_derecho());
-        Vbox_ventas.getChildren().addAll(titulo,Hbox_ventas);
-        return Vbox_ventas;
-    }
-    
-    //***************************************************************************
-    
-    private VBox centro(){
-        VBox Vbox_centro = new VBox();
-        Vbox_centro.setPadding(new Insets(0, 12, 0, 12));
-        Vbox_centro.setSpacing(5);
-        Vbox_centro.setStyle("-fx-background-color: #000000;");
-        
-        textfiel_cantidad_a_comprar = new TextField();
-        textfiel_cantidad_a_comprar.setPrefSize(100, 20);
-        textfiel_cantidad_a_comprar.setPromptText("INGRESE LA CANTIDAD");
-        
-        lista_tallas = new ListView();
-        lista_tallas.setPrefSize(400, 400);
-        
-        //---------------------------------------------------------------
-        HBox caja_btn = new HBox();
-        caja_btn.setPadding(new Insets(5, 5, 5, 150));
-        caja_btn.setSpacing(5);
-        caja_btn.setStyle("-fx-background-color: #000000;");
-        
-        btn_agregar_articulo = new Button("AGREGAR");
-        btn_agregar_articulo.setPrefSize(100, 20);
-        btn_agregar_articulo.setTextFill(Color.web("#D4AF37"));
-        btn_agregar_articulo.setOnAction(handleBotones);
-        btn_agregar_articulo.setStyle("-fx-background-color: transparent;");
-        btn_agregar_articulo.setVisible(false);
-        
-        caja_btn.getChildren().addAll(btn_agregar_articulo);
-        
-        Vbox_centro.getChildren().addAll(textfiel_cantidad_a_comprar,lista_tallas,caja_btn);
-        
-        return Vbox_centro;
-    }
-    
-    private VBox lado_derecho(){
-        VBox Vbox_ticket = new VBox();
-        Vbox_ticket.setPadding(new Insets(15, 50, 15, 50));
-        Vbox_ticket.setSpacing(10);
-        Vbox_ticket.setStyle("-fx-background-color: #000000;");
-        
-        VBox informacion = new VBox();
-        informacion.setPrefSize(450, 180);
-        informacion.setPadding(new Insets(15, 12, 15, 12));
-        informacion.setSpacing(10);
-        informacion.setStyle("-fx-background-color: #111111;");
-        
-        String info = "\t\t\tFERNANDA\n"
-                + "\tAv. Antonio Garcia Cubas\n"
-                + "# 533\n"
-                + "\t\t\t\t"+metodo.fecha();
-        TextArea textArea = new TextArea(info);
-        textArea.setPrefSize(400, 100);
-        textArea.setCenterShape(true);
-        textArea.setEditable(false);
-        
-        
-        informacion.getChildren().addAll(textArea);
-        
-        
-        lista2 = new ListView();
-        lista2.setPrefSize(400, 400);
-        
-        HBox botonera = new HBox();
-        //botonera.setPadding(new Insets(10, 10, 10, 120));
-        botonera.setSpacing(40);
-        botonera.setStyle("-fx-background-color: #000000;");
-        
-        Button btn_eliminar = new Button("f");
-        btn_eliminar.setPrefSize(100, 20);
-        btn_eliminar.setTextFill(Color.web("#D4AF37"));
-        btn_eliminar.setOnAction(handleBotones);
-        btn_eliminar.setStyle("-fx-background-color: transparent;");
-        
-        btn_procesar = new Button("PROCESAR");
-        btn_procesar.setPrefSize(100, 20);
-        btn_procesar.setTextFill(Color.web("#D4AF37"));
-        btn_procesar.setOnAction(handleBotones);
-        btn_procesar.setStyle("-fx-background-color: transparent;");
-        btn_procesar.setVisible(false);
-        
-        no_ticket_a_generar = new Label(" ");
-        no_ticket_a_generar.setTextFill(Color.web("#D4AF37"));
-        no_ticket_a_generar.setPrefSize(150, 20);
-        
-        botonera.getChildren().addAll(no_ticket_a_generar,btn_eliminar, btn_procesar);
-        
-        Vbox_ticket.getChildren().addAll(informacion, lista2, botonera);
-
-        return Vbox_ticket;
-    }
-    
-    //***************************************************************************
-    
-    
-    
-    
     
     //SECCION DE CODIGO PARA EL BOTON LATERAL 
     private VBox sistema_apartado(){
@@ -1149,22 +1016,6 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
 //-----------------------------------------------BOTONES EDITAR---------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------------------
-                case "AGREGAR":
-                    {
-                        try {
-                            agregar();
-                            btn_procesar.setVisible(true);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(Proyecto5BaseDeDatos.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    break;    
-                case "ELIMINAR":
-                    //quitar();
-                    break;
-                case "PROCESAR":
-                    actualizar_compra();
-                    break;
                 case "Buscar":
                     buscarProducto(Integer.parseInt(campo11.getText()));
                     break;
@@ -1180,9 +1031,6 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
                 case "BUSQUEDA":
                     busqueda();
                     break;
-                case "f":
-                    procesar_compra();
-                    break;
                 default:
                     break;
             }
@@ -1192,29 +1040,6 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
     private void busqueda_Tallas(int codigo){
         lista_tallas.getItems().clear();
         lista_tallas.setItems(con_consultar.getTallas_Por_Clave_Producto_List(codigo));
-    }
-    
-    
-    
-    private void agregar() throws SQLException{
-        try{
-            int cve_producto=0;
-            List<Producto> sval = lista1.getSelectionModel().getSelectedItems();
-                for(int i=0;i<sval.size();i++){
-                    Producto seleccion_inven = sval.get(i);
-                    cve_producto = seleccion_inven.getCve_producto();
-                    lista2.getItems().add(seleccion_inven);
-                    total += seleccion_inven.getPrecio_venta();
-                    textfiel_total_ticket.setText(""+total);
-                }
-                
-            actualiza_existencia();
-            Ticket_Se_Incluye_En_Producto nuevo = new Ticket_Se_Incluye_En_Producto(Integer.parseInt(textfiel_cantidad_a_comprar.getText()), _no_ticket, cve_producto);
-            con_crear.insertaTicket_se_incluye_en_producto(nuevo);
-            
-        }catch(SQLException | NumberFormatException e){
-            System.out.println(""+e);
-        }
     }
     
     private void actualiza_existencia() throws SQLException{
@@ -1292,23 +1117,7 @@ public class Proyecto5BaseDeDatos extends Application implements EventHandler<Ac
                 msg.setGraphic(new ImageView(new Image("iconos/ticket_en_factura.png")));
                 msg.show();
             }
-            
         } catch (NumberFormatException | SQLException e) {}
-    }
-    
-    private void quitar(){
-//        List<Producto> sval = lista2.getSelectionModel().getSelectedItems();
-//            for(int i=0;i<sval.size();i++){
-//                Producto seleccion = sval.get(i);
-//                try{   
-//                    lista2.getItems().remove(seleccion);
-//                    total -= seleccion.getPrecio_venta();
-//                    textfiel_total_ticket.setText(""+total);
-//                }
-//                catch(Exception e){
-//                    System.out.println(e.getMessage());
-//                }
-//            }
     }
     
     private void buscarProducto(int codigo){

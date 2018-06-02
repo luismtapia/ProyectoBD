@@ -74,6 +74,8 @@
             <Button onAction="#handleBotones" text="VER TALLAS" fx:id="btn_ver_tallas" ><style> -fx-background-color: transparent; </style></Button>
             <Button onAction="#handleBotones" text="AGREGAR A TICKET" fx:id="btn_agregar_a_ticket"><style> -fx-background-color: transparent; </style></Button>
             <Button onAction="#handleBotones" text="QUITAR DE TICKET" fx:id="btn_quitar_de_ticket"><style> -fx-background-color: transparent; </style></Button>
+            <Button onAction="#handleBotones" text="CANCELAR" fx:id="btn_cancelar"><style> -fx-background-color: transparent; </style></Button>
+            <Button onAction="#handleBotones" text="COBRAR" fx:id="btn_cobrar"><style> -fx-background-color: transparent; </style></Button>
         </HBox>
     </children>
 </VBox>

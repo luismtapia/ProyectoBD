@@ -210,7 +210,7 @@ public class TelefonosController implements Initializable{
     private void llenarcomboboxClaveTelefono(){
         cve_telefonos.getItems().clear();
         cve_telefonos.setPromptText("SELECCIONE LA CLAVE DEL TELEFONO");
-        ResultSet rs = con_consultar.consultarTipo_Telefono();
+        ResultSet rs = con_consultar.consultarDESDEtabla("TIPO_TELEFONO");
         try {
             while (rs.next()) {                
                 cve_telefonos.getItems().add(rs.getString("tipo"));

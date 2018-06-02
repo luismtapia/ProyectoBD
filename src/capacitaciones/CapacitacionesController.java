@@ -196,7 +196,7 @@ public class CapacitacionesController implements Initializable{
     private void llenarcomboboxArea(){
         cmb_area.getItems().clear();
         cmb_area.setPromptText("SELECCIONE EL AREA");
-        ResultSet rs = con_consultar.consultarArea();
+        ResultSet rs = con_consultar.consultarDESDEtabla("AREA");
         try {
             while (rs.next()) {                
                 cmb_area.getItems().add(rs.getString("nombre_area"));

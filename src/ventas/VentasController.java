@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import SQL.SQL_Actualizar;
 import SQL.SQL_Consultar;
 import SQL.SQL_Crear;
+import SQL.SQL_Ejecutar;
 import SQL.SQL_Eliminar;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -28,19 +29,24 @@ import java.util.Optional;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import productos.Producto;
+import tallas_es_de_productos.Talla_Es_De_Producto;
+import ticket_se_incluye_en_producto.Ticket_Se_Incluye_En_Producto;
+import tickets.Ticket;
 
 public class VentasController implements Initializable{
     SQL_Crear con_crear= new SQL_Crear();
     SQL_Actualizar con_actualizar= new SQL_Actualizar();
     SQL_Consultar con_consultar= new SQL_Consultar();
     SQL_Eliminar con_Eliminar= new SQL_Eliminar();
+    SQL_Ejecutar con_ejecutar = new SQL_Ejecutar();
     int no_empleado_anterior;
     
     @FXML
     private TextField cantidad;
     @FXML
-    private Button btn_depto_1,btn_depto_2,btn_ver_tallas,btn_agregar_a_ticket,btn_quitar_de_ticket;
+    private Button btn_depto_1,btn_depto_2,btn_ver_tallas,btn_agregar_a_ticket,btn_quitar_de_ticket,btn_cancelar,btn_cobrar;
     @FXML
     private Label lbl1,lbl2,lbl3,lbl4,lbl_total_a_pagar;
     @FXML
@@ -59,43 +65,19 @@ public class VentasController implements Initializable{
             }else
                 if(event.getSource() == btn_ver_tallas){
                     buscarTallas();
-                }//else
-//                    if(event.getSource() == btn_eliminar){
-//                        vista_crear(false);
-//                        vista_consultar(false);
-//                        vista_actualizar(false);
-//                        vista_eliminar(true);
-//                        busqueda();
-//                        btn_cancelar.setVisible(false);
-//                        btn_aceptar_actualizar.setVisible(false);
-//                    }else
-//                        if(event.getSource() == btn_seleccionar){
-//                            seleccionar();
-//                            btn_seleccionar.setVisible(false);
-//                            btn_cancelar.setVisible(true);
-//                            btn_aceptar_actualizar.setVisible(true);
-//                            seleccionar();
-//                            //
-//                        }else
-//                        if(event.getSource() == btn_cancelar){
-//                            btn_seleccionar.setVisible(true);
-//                            btn_cancelar.setVisible(false);
-//                            btn_aceptar_actualizar.setVisible(false);
-//                            limpiar();
-//                        }else
-//                            if(event.getSource() == btn_aceptar_actualizar){
-//                                actualizar();
-//                                busqueda();
-//                                btn_aceptar_actualizar.setVisible(false);
-//                                limpiar();
-//                            }else
-//                                if(event.getSource() == btn_aceptar_crear){
-//                                    crear();
-//                                }else
-//                                    if(event.getSource() == btn_aceptar_eliminar){
-//                                        eliminar();
-//                                        busqueda();
-//                                    }
+                }else
+                    if(event.getSource() == btn_agregar_a_ticket){
+                        agregarATicket();
+                    }else
+                        if(event.getSource() == btn_quitar_de_ticket){
+                            quitarATicket();
+                        }else
+                        if(event.getSource() == btn_cancelar){
+                            
+                        }else
+                            if(event.getSource() == btn_cobrar){
+                                
+                            }
     }
     
     @Override
@@ -137,6 +119,78 @@ public class VentasController implements Initializable{
         } catch (Exception e) {System.err.println(""+e);}
     }
     
+    private void agregarATicket() throws SQLException{
+        try{
+            int  cantidad_anterior=0, numero=0, cve_producto=0,cantidad_nueva=1,cant=0;
+            double total=0,precio_venta=0;
+            int cantidad_de_compra_y_quitar = Integer.parseInt(cantidad.getText());
+            String descripcion = null;
+            List<Talla_Es_De_Producto> sexistencia = lista2.getSelectionModel().getSelectedItems();
+                for(int i=0;i<sexistencia.size();i++){
+                    Talla_Es_De_Producto seleccion = sexistencia.get(i);
+                    cantidad_anterior = seleccion.getCantidad_existencia();
+                    numero = seleccion.getNumero();
+                    cve_producto = seleccion.getCve_producto();
+                }
+            System.out.println(""+cve_producto);
+            //ejecuta existencia despues revisa esta actualizacion hecha
+            con_ejecutar.ejecutarexcedeExistencia(cantidad_de_compra_y_quitar, numero, cve_producto);
+            ResultSet rs = con_consultar.consultarDESDEtablaCONespecificacion("TALLAS_ESDE_PRODUCTO", "cantidad_existencia","cve_producto",cve_producto+" AND numero = "+numero);
+            while(rs.next()){
+                cantidad_nueva = rs.getInt("cantidad_existencia");
+            }
+            
+            if(cantidad_anterior == cantidad_nueva){
+                Alert m=new Alert(Alert.AlertType.INFORMATION);
+                m.setTitle("Actualizando existencia");
+                m.setContentText("no se puede procesar compra");
+                //m.setGraphic(new ImageView(new Image("iconos/usuario.png")));
+                m.show();
+            }else{
+                for (int j = 1; j <= cantidad_de_compra_y_quitar; j++) {
+                    List<Producto> sval1 = lista1.getSelectionModel().getSelectedItems();
+                        for(int i=0;i<sval1.size();i++){
+                            Producto seleccion_inven = sval1.get(i);
+                            cve_producto = seleccion_inven.getCve_producto();
+                            descripcion = seleccion_inven.getDescripcion();
+                            precio_venta = seleccion_inven.getPrecio_venta();
+                        }
+                    List<Talla_Es_De_Producto> selec = lista2.getSelectionModel().getSelectedItems();
+                        for(int i=0;i<selec.size();i++){
+                            Talla_Es_De_Producto selecc = selec.get(i);
+                            numero = selecc.getNumero();
+                        }
+                    VistaTicket nota = new VistaTicket(cve_producto, descripcion, precio_venta, numero);
+                            lista3.getItems().add(nota);
+                            total += precio_venta;
+                            lbl1.setText(""+total);
+                }
+            }
+            buscarTallas();
+        }catch(NumberFormatException e){
+            System.out.println(""+e);
+        }
+    }
+    
+    private void quitarATicket(){
+        List<VistaTicket> sval = lista3.getSelectionModel().getSelectedItems();
+            for(int i=0;i<sval.size();i++){
+                VistaTicket seleccionado = sval.get(i);
+                try{   
+                    lista3.getItems().remove(seleccionado);
+                    Double total = Double.parseDouble(lbl1.getText()) - seleccionado.getPrecio_venta();
+                    int numero = seleccionado.getNumero();
+                    int cve_producto = seleccionado.getCve_producto();
+                    lbl1.setText(""+total);
+                    //*******************************************************************
+                    //con_actualizar.Actualizar1Campo("TALLAS_ESDE_PRODUCTOS", "cantidad_existencia", "(select max(cantidad_existencia,0))-1", " where numero = "+numero+" AND cve_producto = "+cve_producto);
+                }
+                catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+    }
+    
     private void buscarTallas() throws SQLException{
         try{
 //            ResultSet rs = con_consultar.getUltimo_Ticket();
@@ -153,45 +207,10 @@ public class VentasController implements Initializable{
                 }
         }catch(Exception e){System.out.println(""+e);}
     }
+    
     private void llenarTallas(int codigo){
         lista2.getItems().clear();
         lista2.setItems(con_consultar.getTallas_Por_Clave_Producto_List(codigo));
-    }
-    
-    private void vista_crear(boolean vista){
-        lbl1.setVisible(vista);
-        lbl2.setVisible(vista);
-//        lbl3.setVisible(vista);
-//        lbl4.setVisible(vista);
-//        cmb_nivel.setVisible(vista);
-//        nombre_empleado.setVisible(vista);
-//        direccion_empleado.setVisible(vista);
-//        fecha_contratacion.setVisible(vista);
-//        btn_aceptar_crear.setVisible(vista);
-    }
-    
-    private void vista_consultar(boolean vista){
-//        lista.setVisible(vista);
-    }
-    
-    private void vista_actualizar(boolean vista){
-//        lbl1.setVisible(vista);
-//        lbl2.setVisible(vista);
-//        lbl3.setVisible(vista);
-//        lbl4.setVisible(vista);
-//        cmb_nivel.setVisible(vista);
-//        nombre_empleado.setVisible(vista);
-//        direccion_empleado.setVisible(vista);
-//        fecha_contratacion.setVisible(vista);
-//        btn_seleccionar.setVisible(vista);
-//        lista.setVisible(vista);
-        //btn_aceptar_actualizar.setVisible(vista);
-    }
-    
-    private void vista_eliminar(boolean vista){
-////        lista.setVisible(vista);
-////        
-////        btn_aceptar_eliminar.setVisible(vista);
     }
     
     private void imagenes(){
@@ -201,9 +220,29 @@ public class VentasController implements Initializable{
         btn_depto_2.setContentDisplay(ContentDisplay.BOTTOM);
     }
     
-    private void busqueda() throws SQLException{
-//        lista.getItems().clear();
-//        lista.setItems(con_consultar.getEmpleados());
+    private void ejecutar_compra(){
+//        try {
+//            Ticket nuevo_ticket = new Ticket(0, metodo.fecha(), total, Integer.parseInt(usuario[6]));
+//            if(con_crear.insertaTicket(nuevo_ticket)){
+//                Alert msg=new Alert(Alert.AlertType.INFORMATION);
+//                msg.setTitle("Compra registrada");
+//                msg.setContentText("Su compra fue relizada correctamente");
+//                msg.setGraphic(new ImageView(new Image("iconos/ticket_en_factura.png")));
+//                msg.show();
+//                
+//                ResultSet rs = con_consultar.getUltimo_Ticket();
+//                while(rs.next()){
+//                    _no_ticket = rs.getInt("no_ticket");
+//                }
+//             }else{
+//                Alert msg=new Alert(Alert.AlertType.INFORMATION);
+//                msg.setTitle("Hay un Problema");
+//                msg.setContentText("Llame a SOPORTE TÉCNICO");
+//                msg.setGraphic(new ImageView(new Image("iconos/ticket_en_factura.png")));
+//                msg.show();
+//            }
+            
+//        } catch (NumberFormatException | SQLException e) {}
     }
     
     private void llenarcomboboxCliente(){
@@ -239,82 +278,14 @@ public class VentasController implements Initializable{
 //                    System.out.println(""+e);
 //                }
 //            }
-    }
-    
-    private void actualizar() throws SQLException{
-//        String nombre_empleado_=nombre_empleado.getText();
-//        String direccion_empleado_=direccion_empleado.getText();
-//        Date fecha_contratacion_=Date.valueOf(fecha_contratacion.getValue().toString());
-//        int nivel_=Integer.parseInt(String.valueOf(cmb_nivel.getSelectionModel().getSelectedItem()));
-//
-//        if(con_actualizar.ActualizaEmpleado(no_empleado_anterior,nombre_empleado_,direccion_empleado_,fecha_contratacion_,nivel_)){
-//            Alert m=new Alert(Alert.AlertType.INFORMATION);
-//            m.setTitle("Empleado");
-//            m.setContentText("Empleado actualizado correctamente");
-//            m.setGraphic(new ImageView(new Image("iconos/usuario.png")));
-//            m.show();
-//        }else{
-//            Alert m=new Alert(Alert.AlertType.INFORMATION);
-//            m.setTitle("Empleado");
-//            m.setContentText("Empleado no pudo ser actualizado");
-//            m.setGraphic(new ImageView(new Image("iconos/usuario.png")));
-//            m.show();
-//        }
-    }
-    
-    private void limpiar(){
-//        direccion_empleado.setText("");
-//        nombre_empleado.setText("");
-    }
-    
-    private void crear(){
-        //try {
-//            int nivel_=Integer.parseInt(String.valueOf(cmb_nivel.getSelectionModel().getSelectedItem()));
-//            Date _Date_contratacion=Date.valueOf(fecha_contratacion.getValue().toString());
-//            
-//            Venta nuevoEmpleado= new Venta(0, nombre_empleado.getText(),  direccion_empleado.getText(), _Date_contratacion, nivel_);
-////            if(con_crear.insertaEmpleado(nuevoEmpleado)){
-//               Alert msg=new Alert(Alert.AlertType.INFORMATION);
-//               msg.setTitle("Registro guardado");
-//               msg.setContentText("guardado correctamente");
-//               msg.setGraphic(new ImageView(new Image("iconos/usuario.png")));
-//               msg.show();
-//            }
-//        } catch (Exception e) {    
-//            Alert m=new Alert(Alert.AlertType.INFORMATION);
-//            m.setTitle("ERROR");
-//            m.setContentText("Empleado no pudo ser creado"+e);
-//            m.setGraphic(new ImageView(new Image("iconos/usuario.png")));
-//            m.show();
-//            System.out.println(e);
-//        }
-    }
-    
-    private void eliminar(){
-//        List<Venta> sval = lista.getSelectionModel().getSelectedItems();
-//            for(int i=0;i<sval.size();i++){
-//                Venta empleadoSeleccionado = sval.get(i);
-//                try{
-//                    Alert msg =new Alert(Alert.AlertType.CONFIRMATION);
-//                    msg.setTitle(("ELiminar"));
-//                    msg.setHeaderText("Capacitacion");
-//                    msg.setContentText("¿Seguro de eliminar la capacitacion seleccionada?\n\n"+empleadoSeleccionado.getNombre_empleado());
-//                    msg.setGraphic(new ImageView(new Image("iconos/capacitacion.png")));
-//                    Optional<ButtonType> res= msg.showAndWait();
-//                    if(res.get()==ButtonType.OK)
-//                    {
-////                        if(con_Eliminar.eliminaEmpleado(empleadoSeleccionado.getNo_empleado())){
-////                            Alert ms =new Alert(Alert.AlertType.CONFIRMATION);
-////                            ms.setTitle(("Empleado"));
-////                            ms.setHeaderText("Eliminado");
-////                            ms.setContentText("Se ha eliminado el empleado"+ empleadoSeleccionado.getNo_empleado()+ " "+empleadoSeleccionado.getNombre_empleado() + " correctamente");
-////                            ms.setGraphic(new ImageView(new Image("iconos/usuario.png")));
-////                        }
-//                    }
-//                }
-//                catch(Exception e){
-//                    System.out.println(e.getMessage());
-//                }
-            //}
+
+//            String info = "\t\t\tFERNANDA\n"
+//                + "\tAv. Antonio Garcia Cubas\n"
+//                + "# 533\n"
+//                + "\t\t\t\t"+metodo.fecha();
+//                TextArea textArea = new TextArea(info);
+//                textArea.setPrefSize(400, 100);
+//                textArea.setCenterShape(true);
+//                textArea.setEditable(false);
     }
 }

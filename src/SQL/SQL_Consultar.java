@@ -536,8 +536,9 @@ public class SQL_Consultar {
             }
             return resultado;
     }
-    public ResultSet consultarArea() {
-            String query = "SELECT * FROM AREA";
+    
+    public ResultSet consultarDESDEtablaCONespecificacion(String tabla,String columna,String bandera,String parametro) {
+            String query = "SELECT "+columna+" FROM "+tabla+" WHERE "+bandera+" = "+parametro;
             java.sql.ResultSet resultado=null;
             try {
                 Statement st = Conexion.createStatement();
@@ -562,18 +563,6 @@ public class SQL_Consultar {
     
     public ResultSet consultarNivel() {
             String query = "SELECT * FROM SUELDO";
-            java.sql.ResultSet resultado=null;
-            try {
-                Statement st = Conexion.createStatement();
-                resultado = st.executeQuery(query);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-            return resultado;
-    }
-    
-    public ResultSet consultarTipo_Telefono() {
-            String query = "SELECT * FROM TIPO_TELEFONO";
             java.sql.ResultSet resultado=null;
             try {
                 Statement st = Conexion.createStatement();
